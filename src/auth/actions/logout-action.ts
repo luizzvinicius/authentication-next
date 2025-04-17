@@ -1,4 +1,4 @@
-import { logout } from "@/app/auth/service/auth";
+import { logout } from "@/auth/service/auth";
 import { actionClient } from "@/lib/safe-action";
 import { z } from "zod";
 

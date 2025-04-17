@@ -1,4 +1,4 @@
-import { login } from "@/app/auth/service/auth";
+import { login } from "@/auth/service/auth";
 import { actionClient } from "@/lib/safe-action";
 import { z } from "zod";
 

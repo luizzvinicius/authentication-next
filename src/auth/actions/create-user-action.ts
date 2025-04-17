@@ -1,4 +1,4 @@
-import { createUser, RoleEnum } from "@/app/auth/service/auth";
+import { createUser, RoleEnum } from "@/auth/service/auth";
 import { actionClient } from "@/lib/safe-action";
 import { z } from "zod";
 

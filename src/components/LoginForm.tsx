@@ -7,7 +7,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { useState } from "react";
-import { loginAction } from "@/app/auth/actions/login-action";
+import { loginAction } from "@/auth/actions/login-action";
 import { useAction } from "next-safe-action/hooks";
 
 const loginFormSchema = z
