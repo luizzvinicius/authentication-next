@@ -7,6 +7,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
 import { useState } from "react";
+import { loginAction } from "@/app/auth/actions/login-action";
+import { useAction } from "next-safe-action/hooks";
 
 const loginFormSchema = z
 	.object({
@@ -15,15 +17,14 @@ const loginFormSchema = z
 			.email("Email inválido")
 			.nonempty("Email é obrigatório")
 			.max(255, "Email deve ter no máximo 255 caracteres"),
-		password: z
-			.string()
-			.min(4, "Senha deve ter no mínimo 4 caracteres")
-			.max(255, "Senha deve ter no máximo 255 caracteres")
-			.refine(value => {
-				const hasLetter = /[a-zA-Z]/.test(value);
-				const hasNumber = /\d/.test(value);
-				return hasLetter && hasNumber;
-			}, "Senha deve conter pelo menos uma letra e um número"),
+		password: z.string(),
+		// .min(4, "Senha deve ter no mínimo 4 caracteres")
+		// .max(255, "Senha deve ter no máximo 255 caracteres")
+		// .refine(value => {
+		// 	const hasLetter = /[a-zA-Z]/.test(value);
+		// 	const hasNumber = /\d/.test(value);
+		// 	return hasLetter && hasNumber;
+		// }, "Senha deve conter pelo menos uma letra e um número"),
 	})
 	.required();
 
@@ -36,8 +37,10 @@ export function LoginForm() {
 		},
 	});
 
-	function onSubmit(data: z.infer<typeof loginFormSchema>) {
-		console.log("Form data", data);
+	const { executeAsync, isPending } = useAction(loginAction);
+	async function onSubmit(data: z.infer<typeof loginFormSchema>) {
+		const result = await executeAsync(data);
+		console.log(result);
 	}
 
 	const [passwordVisible, setPasswordVisible] = useState({
