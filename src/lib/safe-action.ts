@@ -1,13 +1,10 @@
-import {
-	createSafeActionClient,
-	DEFAULT_SERVER_ERROR_MESSAGE,
-} from "next-safe-action";
+import { createSafeActionClient, DEFAULT_SERVER_ERROR_MESSAGE } from "next-safe-action";
 
 export const actionClient = createSafeActionClient({
 	handleServerError(e) {
-		console.log(e);
-		if (e instanceof Error) {
-			return e.message;
+		// console.log("from safe action", e);
+		if (e.response?.data) {
+			return e.response.data;
 		}
 		return DEFAULT_SERVER_ERROR_MESSAGE;
 	},

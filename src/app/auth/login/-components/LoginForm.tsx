@@ -37,10 +37,10 @@ export function LoginForm() {
 		},
 	});
 
-	const { executeAsync, isPending } = useAction(loginAction);
+	const { executeAsync, isPending, result } = useAction(loginAction);
 	async function onSubmit(data: z.infer<typeof loginFormSchema>) {
 		const result = await executeAsync(data);
-		console.log(result);
+		console.log(result?.serverError);
 	}
 
 	const [passwordVisible, setPasswordVisible] = useState({
@@ -120,6 +120,7 @@ export function LoginForm() {
 							</FormItem>
 						)}
 					/>
+					<span>{result.serverError?.message || ""}</span>
 					<div className="flex justify-center mt-auto">
 						<Button type="submit" className="w-[90%]">
 							Login

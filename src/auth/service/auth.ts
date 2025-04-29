@@ -21,8 +21,8 @@ export enum RoleEnum {
 const base_url = "http://localhost:8081/auth";
 
 export const login = async (params: LoginRequest) => {
-	const { data } = await axios.post(`${base_url}/login`, params);
-	return data;
+	const response = await axios.post(`${base_url}/login`, params);
+	return response;
 };
 
 export const createUser = async (params: CreateUserDto) => {
