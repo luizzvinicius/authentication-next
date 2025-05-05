@@ -5,6 +5,17 @@ type LoginRequest = {
 	password: string;
 };
 
+type LoginResponse = {
+	access_token: string;
+	expires_in: number;
+	refresh_expires_in: number;
+	refresh_token: string;
+	token_type: string;
+	not_before_policy: number;
+	session_state: string;
+	scope: string;
+};
+
 type CreateUserDto = {
 	name: string;
 	email: string;
@@ -18,19 +29,22 @@ export enum RoleEnum {
 	PORTEIRO = "PORTEIRO",
 }
 
-const base_url = "http://localhost:8081/auth";
+const api = axios.create({
+	baseURL: "http://localhost:8081/auth",
+	withCredentials: true,
+});
 
 export const login = async (params: LoginRequest) => {
-	const response = await axios.post(`${base_url}/login`, params);
-	return response;
+	const { data } = await api.post<LoginResponse>("/login", params);
+	return data;
 };
 
 export const createUser = async (params: CreateUserDto) => {
-	const { data } = await axios.post(`${base_url}/create`, params);
+	const { data } = await api.post("/create", params);
 	return data;
 };
 
 export const logout = async (userId: string) => {
-	const { data } = await axios.post(`${base_url}/logout/${userId}`);
+	const { data } = await api.post(`/logout/${userId}`);
 	return data;
 };
